@@ -9,6 +9,9 @@ A interface gráfica do Coderitmo Desktop é construída usando a biblioteca Pyt
     *   Tamanho Mínimo: 800x500 pixels
     *   Aparência: Baseada no sistema (Claro/Escuro)
     *   Tema de Cor: Azul (padrão do CustomTkinter)
+ 
+![image](https://github.com/user-attachments/assets/beaa4f91-7f83-46bd-b4b9-40cbe748a477)
+
 
 *(Esta seção será expandida conforme adicionarmos os painéis de editor, saída e controles).*
 
