@@ -1,0 +1,70 @@
+// --- Gramática Lark para Coderitmo-Lang (Versão Inicial) ---
+
+?start: algoritmo_decl var_section? inicio_bloco fim_algoritmo
+
+// --- Blocos Principais ---
+algoritmo_decl: "algoritmo" STRING
+// Optional var section
+?var_section: "var" _NEWLINE _INDENT var_decl+ _DEDENT
+inicio_bloco: "inicio" _NEWLINE statements "fim" _NEWLINE?
+fim_algoritmo: "fim_algoritmo" _NEWLINE? // Allow optional newline at EOF
+
+
+// --- Declaração de Variáveis ---
+var_decl: CNAME ("," CNAME)* ":" tipo _NEWLINE
+
+// --- Tipos ---
+tipo: "inteiro" | "real" | "texto" | "logico"
+
+
+// --- Bloco de Comandos (Statements) ---
+// statements representa um bloco indentado de comandos
+statements: _INDENT statement+ _DEDENT
+
+// statement é um único comando ou linha em branco
+?statement: (assign_stmt | escreva_stmt | comentario) _NEWLINE
+          | _NEWLINE -> empty_line // Linhas em branco são permitidas
+
+// --- Comandos Específicos ---
+assign_stmt: CNAME "=" expr // Atribuição simples
+escreva_stmt: "escreva_saida" "(" expr_list? ")" // Comando de escrita (com parênteses)
+
+// --- Expressões (Muito Básico por Enquanto) ---
+?expr_list: expr ("," expr)* // Lista de expressões para escreva_saida
+
+?expr: atom // Por enquanto, expressão é apenas um átomo
+
+?atom: NUMBER         -> number_literal
+     | STRING         -> string_literal
+     | bool_literal   -> bool_literal
+     | CNAME          -> variable // Referência a variável
+
+bool_literal: "verdadeiro" | "falso"
+
+
+// --- Comentários ---
+comentario: COMMENT
+
+
+// --- Terminais e Configurações Lark ---
+// Importa terminais comuns (nomes, números, strings, whitespace)
+%import common.CNAME
+%import common.SIGNED_NUMBER -> NUMBER
+%import common.ESCAPED_STRING -> STRING
+%import common.WS_INLINE
+%import common.NEWLINE -> _NEWLINE
+
+// Define o token para comentários (do # até o fim da linha)
+COMMENT: /#.*/
+
+// Ignora espaços e tabs dentro das linhas
+%ignore WS_INLINE
+// Ignora comentários completamente durante o parsing
+%ignore COMMENT
+
+// Declara os tokens especiais de indentação que Lark vai gerar
+%declare _INDENT _DEDENT
+
+// NOTA: Não estamos ignorando _NEWLINE globalmente porque
+//       a gramática o usa explicitamente (ex: fim de var_decl, fim de statement)
+//       e Lark usa newlines para ajudar na detecção de _INDENT/_DEDENT.

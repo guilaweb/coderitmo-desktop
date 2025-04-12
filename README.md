@@ -62,3 +62,19 @@ A interface gráfica do Coderitmo Desktop é construída usando a biblioteca Pyt
         *   `saida_textbox`: `CTkTextbox` (somente leitura, para exibir output do programa e mensagens).
 
 *(Screenshots podem ser adicionados aqui para ilustrar o layout).*
+
+## Linguagem Coderitmo e Parser
+
+*   **Linguagem:** A sintaxe da Coderitmo-Lang está sendo definida formalmente no arquivo `coderitmo_lang.lark`. Ela é baseada em indentação e usa palavras-chave inspiradas em Portugol e Python.
+*   **Parser:** A análise sintática (parsing) do código Coderitmo-Lang é realizada pela biblioteca **Lark** (`lark-parser`).
+*   **Módulo:** A lógica do parser está encapsulada na classe `CoderitmoParser` dentro do arquivo `parser_coderitmo.py`.
+    *   Ele carrega a gramática de `coderitmo_lang.lark`.
+    *   Utiliza o lexer contextual do Lark para tratar a indentação.
+    *   O método `parse(source_code)` recebe o código como string e retorna uma Árvore de Sintaxe Abstrata (AST) da Lark em caso de sucesso, ou `None` em caso de erro (imprimindo detalhes no console).
+
+### Dependências
+
+Adicione `lark-parser` à lista de dependências (ou crie/atualize o `requirements.txt`): 
+customtkinter
+lark-parser 
+Para instalar: `pip install -r requirements.txt` (ou `pip install customtkinter lark-parser`)
