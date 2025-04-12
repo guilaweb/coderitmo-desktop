@@ -34,3 +34,31 @@ A interface gráfica do Coderitmo Desktop é construída usando a biblioteca Pyt
     ```bash
     python main.py
     ```
+
+    ## Estrutura da GUI
+
+A interface gráfica do Coderitmo Desktop é construída usando a biblioteca Python **CustomTkinter** e organizada com o gerenciador de layout **grid**.
+
+*   **Janela Principal (`CoderitmoApp`)**: Contém a grade principal (2 colunas, 3 linhas).
+    *   Coluna 0 (`weight=3`), Coluna 1 (`weight=1`)
+    *   Linha 0 (`weight=0`), Linha 1 (`weight=3`), Linha 2 (`weight=1`)
+
+*   **Frames Principais:**
+    *   `controles_frame` (Linha 0, Colunas 0-1): Contém os botões de controle.
+    *   `central_frame` (Linha 1, Colunas 0-1): Contém os frames do editor e das variáveis.
+        *   Grade Interna: Coluna 0 (Editor, `weight=3`), Coluna 1 (Variáveis, `weight=1`).
+    *   `saida_frame` (Linha 2, Colunas 0-1): Contém a caixa de texto de saída.
+
+*   **Widgets Principais:**
+    *   **Controles (`controles_frame`):**
+        *   `botao_executar`: `CTkButton`
+        *   `botao_passo`: `CTkButton` (inicialmente desabilitado)
+        *   `botao_parar`: `CTkButton` (inicialmente desabilitado)
+    *   **Editor (`central_frame` -> `editor_container_frame`):**
+        *   `editor_textbox`: `CTkTextbox` (para entrada do código Coderitmo-Lang).
+    *   **Variáveis (`central_frame` -> `variaveis_frame`):**
+        *   Placeholder `CTkLabel`. (Será substituído por um visualizador de variáveis).
+    *   **Saída (`saida_frame`):**
+        *   `saida_textbox`: `CTkTextbox` (somente leitura, para exibir output do programa e mensagens).
+
+*(Screenshots podem ser adicionados aqui para ilustrar o layout).*
